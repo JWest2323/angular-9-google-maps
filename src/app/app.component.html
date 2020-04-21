@@ -1,0 +1,7 @@
+<google-map height="400px" width="750px" mapTypeId="terrain" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)"
+	(mapMousemove)="move($event)" (mapRightclick)="removeLastMarker()">
+	<map-marker #marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
+		[options]="markerOptions" (mapClick)="openInfoWindow(marker)"></map-marker>
+	<map-info-window>Info Window</map-info-window>
+</google-map>
+<button>Get Current Location</button>
