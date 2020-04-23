@@ -9,7 +9,7 @@ import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
 export class AppComponent implements OnInit {
   name = "Angular";
 
-  @ViewChild(GoogleMap) map: GoogleMap;
+  @ViewChild(GoogleMap) map: google.maps.Map;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
 
   center: google.maps.LatLngLiteral;
@@ -18,13 +18,12 @@ export class AppComponent implements OnInit {
   zoom = 10;
   display?: google.maps.LatLngLiteral;
 
-  // marker = new google.maps.Marker({
-  //   map: map,
-  //   position: {lat: -34.397, lng: 150.644},
-  //   icon: {
-  //     url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-  //   }
-  // });
+  myMarker = new google.maps.Marker({
+    // position: {lat: -34.397, lng: 150.644},
+    icon: {
+      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+    }
+  });
 
   getCurrentLocation(){
     if(navigator.geolocation) {
@@ -32,12 +31,20 @@ export class AppComponent implements OnInit {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
         const latLng = {lat: latitude, lng: longitude};
+        this.myMarker.setIcon("http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+        this.myMarker.setMap(this.map);
+        this.myMarker.setPosition(latLng);
         this.center = latLng; 
-        this.markerPositions.push(latLng);
+        this.markerPositions.push(this.myMarker.getPosition().toJSON());
+        this.centerOnSelf();
         // console.log(this.center);
         
       })
     }
+  }
+
+  centerOnSelf(){
+    this.center = this.myMarker.getPosition().toJSON();
   }
 
   centerOnMarker(marker: google.maps.LatLngLiteral) {
@@ -54,7 +61,7 @@ export class AppComponent implements OnInit {
 
   addMarker(event: google.maps.MouseEvent) {
     this.markerPositions.push(event.latLng.toJSON());
-    console.log(this.markerPositions[this.markerPositions.length - 1]);
+    console.log(this.markerPositions);
     
   }
 
