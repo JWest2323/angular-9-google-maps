@@ -1,26 +1,40 @@
-<google-map 
-	#map 
-	height="500px" 
-	width="100%" 
-	mapTypeId="terrain" 
-	[center]="center" 
-	[zoom]="zoom" 
-	(mapClick)="addMarker($event)"
-	(mapMousemove)="move($event)" 
-	(mapRightclick)="removeLastMarker()">
-	<map-marker 
-		#marker 
-		*ngFor="let markerPosition of markerPositions" 
-		[position]="markerPosition"
-		[options]="markerOptions" 
-		(mapClick)="openInfoWindow(marker)">
-	</map-marker>
-	<map-info-window>Info Window</map-info-window>
-</google-map>
 <div>
-	<button (click)=centerOnSelf()> Center on Self</button>
-	<button (click)=centerOnMarker(markerPositions[markerPositions.length-1]) > Center on Last Marker</button>
-	<div class="list" ng-repeat="markerPosition in markerPositions">
-		{{ markerPositions }}
+	<mat-sidenav-container class="gmaps-container">
+		<mat-sidenav #sidenav mode="side" [(opened)]="opened">Drawer content</mat-sidenav>
+		<mat-sidenav-content>Main content</mat-sidenav-content>
+		<button (click)="opened=!opened">Toggle Opened</button>
+		<button>Open</button>
+		<button>Close</button>
+	</mat-sidenav-container>
+	<div>
+		<google-map 
+		#map 
+		height="500px" 
+		width="100%" 
+		mapTypeId="terrain" 
+		[center]="center" 
+		[zoom]="zoom" 
+		(mapClick)="addMarker($event)"
+		(mapMousemove)="move($event)" 
+		(mapRightclick)="removeLastMarker()">
+		<map-marker 
+			#marker 
+			*ngFor="let markerPosition of markerPositions" 
+			[position]="markerPosition"
+			[options]="markerOptions" 
+			(mapClick)="openInfoWindow(marker)"
+			(mapClick)=centerOnMarker($event)>
+		</map-marker>
+		<map-info-window>Info Window</map-info-window>
+	</google-map>
+	<div>
+		<button (click)=centerOnSelf()> Center on Self</button>
+	
+		<div class="list" ng-repeat="markerPosition in markerPositions">
+			{{ markerPositions }}
+		</div>
+	</div>
 	</div>
 </div>
+
+
