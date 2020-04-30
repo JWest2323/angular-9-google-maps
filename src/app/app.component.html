@@ -1,16 +1,19 @@
-<div>
-	<mat-sidenav-container class="gmaps-container">
-		<mat-sidenav #sidenav mode="side" [(opened)]="opened">Drawer content</mat-sidenav>
-		<mat-sidenav-content>Main content</mat-sidenav-content>
-		<button (click)="opened=!opened">Toggle Opened</button>
-		<button>Open</button>
-		<button>Close</button>
+<mat-toolbar class="mat-toolbar" color="primary">
+		<mat-toolbar-row>
+				<span>Citi Branch/ATM Locator</span>
+		</mat-toolbar-row>
+</mat-toolbar>
+
+<div class="flex-container">
+	<mat-sidenav-container class="sidenav-container" *ngIf=displaySidenav>
+		<mat-sidenav #sidenav mode="side">Drawer content</mat-sidenav>
+		<mat-sidenav-content>ATM/Branch Locations</mat-sidenav-content>
 	</mat-sidenav-container>
-	<div>
+	<div class="gmaps-container">
 		<google-map 
 		#map 
 		height="500px" 
-		width="100%" 
+		width="900px" 
 		mapTypeId="terrain" 
 		[center]="center" 
 		[zoom]="zoom" 
@@ -29,6 +32,7 @@
 	</google-map>
 	<div>
 		<button (click)=centerOnSelf()> Center on Self</button>
+		<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
 	
 		<div class="list" ng-repeat="markerPosition in markerPositions">
 			{{ markerPositions }}

@@ -9,7 +9,7 @@ import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
 })
 export class AppComponent implements OnInit {
   name = "Angular";
-  opened = false;
+  displaySidenav = true;
 
   @ViewChild('map') map: google.maps.Map;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
