@@ -14,18 +14,20 @@ export class AppComponent implements OnInit {
   @ViewChild('map') map: google.maps.Map;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
 
+  bluedot = '../../assets/marker-circle.png';
+
+  
   center: google.maps.LatLngLiteral;
-  markerOptions = { draggable: false };
+  markerOptions = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png' };
+  markerOptions2 = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/circled-dot.png' };
   markerPositions: google.maps.LatLngLiteral[] = [];
   zoom = 10;
   display?: google.maps.LatLngLiteral;
   currentLocationInfo: google.maps.LatLngLiteral;
-  myMarker = new google.maps.Marker({
-    // position: {lat: -34.397, lng: 150.644},
-    icon: {
-      url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-    }
-  });
+  
+  myMarker = new google.maps.Marker();
+  
+
 
   getCurrentLocation(){
     if(navigator.geolocation) {
@@ -33,9 +35,8 @@ export class AppComponent implements OnInit {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
         const latLng = {lat: latitude, lng: longitude};
+
         this.currentLocationInfo = latLng;
-        this.myMarker.setMap(this.map);
-        this.myMarker.setPosition(latLng);
         this.center = latLng; 
         this.markerPositions.push(this.myMarker.getPosition().toJSON());
         this.centerOnSelf();

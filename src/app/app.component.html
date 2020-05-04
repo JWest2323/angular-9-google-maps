@@ -20,12 +20,21 @@
 		(mapClick)="addMarker($event)"
 		(mapMousemove)="move($event)" 
 		(mapRightclick)="removeLastMarker()">
+		
 		<map-marker 
-			#marker 
+			#markers 
 			*ngFor="let markerPosition of markerPositions" 
 			[position]="markerPosition"
 			[options]="markerOptions" 
-			(mapClick)="openInfoWindow(marker)"
+			(mapClick)="openInfoWindow(markers)"
+			(mapClick)=centerOnMarker($event)>
+		</map-marker>
+
+		<map-marker 
+			#currLocation
+			[position] = "currentLocationInfo"
+			[options]="markerOptions2" 
+			(mapClick)="openInfoWindow(currLocation)"
 			(mapClick)=centerOnMarker($event)>
 		</map-marker>
 		<map-info-window>Info Window</map-info-window>
