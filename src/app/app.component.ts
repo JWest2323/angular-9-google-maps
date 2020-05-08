@@ -7,6 +7,17 @@ import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"]
 })
+
+interface citiMarker {
+    latLng: google.maps.LatLngLiteral
+    type: 'branch' | 'atm'
+    options: {
+      draggable: boolean
+      icon: string
+    }
+
+}
+
 export class AppComponent implements OnInit {
   name = "Angular";
   displaySidenav = true;
@@ -14,13 +25,14 @@ export class AppComponent implements OnInit {
   @ViewChild('map') map: google.maps.Map;
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
 
+
   bluedot = '../../assets/marker-circle.png';
 
   
   center: google.maps.LatLngLiteral;
   markerOptions = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png' };
   markerOptions2 = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/circled-dot.png' };
-  markerPositions: google.maps.LatLngLiteral[] = [];
+  markers: citiMarker[] = [];
   zoom = 10;
   display?: google.maps.LatLngLiteral;
   currentLocationInfo: google.maps.LatLngLiteral;
@@ -62,8 +74,9 @@ export class AppComponent implements OnInit {
   }
 
   addMarker(event: google.maps.MouseEvent) {
-    this.markerPositions.push(event.latLng.toJSON());
-    console.log(this.markerPositions);
+    const newMarker: citiMarker = {latLng: event.latLng.toJSON(), type: "atm", options: {draggable: false, icon: 'assets/marker-circle.png'}};
+    this.markers.push(newMarker);
+    console.log(this.markers);
     
   }
 
@@ -76,7 +89,7 @@ export class AppComponent implements OnInit {
   }
 
   removeLastMarker() {
-    this.markerPositions.pop();
+    this.markers.pop();
   }
 
   CenterControl(controlDiv, map: google.maps.Map) {
