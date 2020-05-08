@@ -1,13 +1,6 @@
 import { Component, ViewChild, OnInit } from "@angular/core";
 import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
 
-
-@Component({
-  selector: "my-app",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
-})
-
 interface citiMarker {
     latLng: google.maps.LatLngLiteral
     type: 'branch' | 'atm'
@@ -15,8 +8,12 @@ interface citiMarker {
       draggable: boolean
       icon: string
     }
-
 }
+@Component({
+  selector: "my-app",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
+})
 
 export class AppComponent implements OnInit {
   name = "Angular";
@@ -32,7 +29,20 @@ export class AppComponent implements OnInit {
   center: google.maps.LatLngLiteral;
   markerOptions = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png' };
   markerOptions2 = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/circled-dot.png' };
-  markers: citiMarker[] = [];
+  markers: citiMarker[] = [
+    {latLng: {lat: 26.073581419812424, lng: -80.33291691002196},
+    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
+    type: "atm"},
+    {latLng: {lat: 26.034101756132287, lng: -80.19970768150634},
+    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
+    type: "branch"},
+    {latLng: {lat: 26.16729226373687, lng: -80.11181705650634},
+    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
+    type: "atm"},
+    {latLng: {lat: 26.274474133866548, lng: -80.23815982994384},
+    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
+    type: "branch"}
+  ];
   zoom = 10;
   display?: google.maps.LatLngLiteral;
   currentLocationInfo: google.maps.LatLngLiteral;
@@ -68,13 +78,24 @@ export class AppComponent implements OnInit {
     const latLng = event.latLng.toJSON();
     this.center = latLng;
   }
+  someFunc() {
+    let tempArray: any = [];
+    for (let index = 0; index < this.markers.length; index++) {
+      if (this.markers[index].type === 'atm'){
+        tempArray = this.markers.filter((marker: citiMarker) => 
+          marker.type = 'atm' )
+      }
+      const element = this.markers[index];
+      
+    }
+  }
 
   ngOnInit(){
     this.getCurrentLocation();
   }
 
   addMarker(event: google.maps.MouseEvent) {
-    const newMarker: citiMarker = {latLng: event.latLng.toJSON(), type: "atm", options: {draggable: false, icon: 'assets/marker-circle.png'}};
+    const newMarker: citiMarker = {latLng: event.latLng.toJSON(), type: "atm", options: {draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png'}};
     this.markers.push(newMarker);
     console.log(this.markers);
     
