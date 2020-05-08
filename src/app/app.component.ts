@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
   currentLocationInfo: google.maps.LatLngLiteral;
   
   myMarker = new google.maps.Marker();
+  icons: any;
+  
   
 
 
@@ -110,7 +112,7 @@ export class AppComponent implements OnInit {
   }
 
   // init map and place the custom control ui
-   initMap(): google.maps.Map {
+   initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       center: this.currentLocationInfo
@@ -123,6 +125,51 @@ export class AppComponent implements OnInit {
 
     //centerControlDiv.index = 1;
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControl);
+    
+    this.icons = {
+      // branch icon
+      branch: {
+        url: '',
+        scaledSize: new google.maps.Size(35, 31)
+      },
+      // active branch icon
+      branchActive:  {
+        url: '',
+        scaledSize: new google.maps.Size(58, 53)
+      },
+      // atm icon
+      atm: {
+        url: '',
+        scaledSize: new google.maps.Size(35, 31) 
+      }, 
+      // active atm icon
+      atmActive: {
+        url: '',
+        scaledSize: new google.maps.Size(58, 53)
+      },
+      // moneyPass icon
+      moneypass: {
+        url: '',
+        scaledSize: new google.maps.Size(35, 31)
+      },
+      // active moneyPass icon
+      moneypassActive: {
+        url: '',
+        scaledSize: new google.maps.Size(58, 53)
+      },
+      // user location icon
+      userlocation: {
+        url: 'assets/marker-circle.png',
+        scaledSize: new google.maps.Size(35, 35)
+      }
+
+
+    }
+
+
+
+    
+    
     return map;
   }
 }
