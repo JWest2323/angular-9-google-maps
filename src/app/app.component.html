@@ -19,7 +19,10 @@
 		[zoom]="zoom" 
 		(mapClick)="addMarker($event)"
 		(mapMousemove)="move($event)" 
-		(mapRightclick)="removeLastMarker()">
+		(mapRightclick)="removeLastMarker()"
+		(boundsChanged)="announceNewBounds()"
+		
+		>
 		
 		<map-marker 
 			#aMarker 
@@ -40,14 +43,18 @@
 		<map-info-window>Info Window</map-info-window>
 	</google-map>
 	<div>
-		<button (click)="someFunc()">Filter Locations</button>
+		<button (click)="filterMarkers()">Filter Locations</button>
 		<button (click)=centerOnSelf()> Center on Self</button>
 		<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
 	
 		<div class="list" ng-repeat="marker in markers">
-			{{ markers }}
+			{{ markers | json }}
 		</div>
 	</div>
+	<div class="overflow-auto">
+		{{mapBounds}}
+	</div>
+
 	</div>
 </div>
 

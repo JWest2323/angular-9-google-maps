@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit } from "@angular/core";
 import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
+import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 
 interface citiMarker {
     latLng: google.maps.LatLngLiteral
@@ -49,6 +50,9 @@ export class AppComponent implements OnInit {
   
   myMarker = new google.maps.Marker();
   icons: any;
+
+  // array for map bounds 
+  mapBounds: google.maps.LatLngBounds[] = [];
   
   
 
@@ -78,16 +82,8 @@ export class AppComponent implements OnInit {
     const latLng = event.latLng.toJSON();
     this.center = latLng;
   }
-  someFunc() {
-    let tempArray: any = [];
-    for (let index = 0; index < this.markers.length; index++) {
-      if (this.markers[index].type === 'atm'){
-        tempArray = this.markers.filter((marker: citiMarker) => 
-          marker.type = 'atm' )
-      }
-      const element = this.markers[index];
-      
-    }
+  filterMarkers() {
+    this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
   }
 
   ngOnInit(){
@@ -99,6 +95,10 @@ export class AppComponent implements OnInit {
     this.markers.push(newMarker);
     console.log(this.markers);
     
+  }
+
+  announceNewBounds() {
+    console.log("map bounds: " + this.map.getBounds());
   }
 
   move(event: google.maps.MouseEvent) {
