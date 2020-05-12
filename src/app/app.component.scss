@@ -18,6 +18,17 @@
     flex-direction: row;
 }
 
+.button-configs {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.overflow-auto {
+    height: 300px;
+    width: 400px;
+    overflow: scroll;
+}
+
 p {
   font-family: Lato;
 }

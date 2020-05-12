@@ -98,7 +98,8 @@ export class AppComponent implements OnInit {
   }
 
   announceNewBounds() {
-    console.log("map bounds: " + this.map.getBounds());
+    this.mapBounds.push(this.map.getBounds());
+    //console.log("map bounds: " + this.map.getBounds());
   }
 
   move(event: google.maps.MouseEvent) {

@@ -9,53 +9,57 @@
 		<mat-sidenav #sidenav mode="side">Drawer content</mat-sidenav>
 		<mat-sidenav-content>ATM/Branch Locations</mat-sidenav-content>
 	</mat-sidenav-container>
-	<div class="gmaps-container">
-		<google-map 
-		#map 
-		height="500px" 
-		width="900px" 
-		mapTypeId="terrain" 
-		[center]="center" 
-		[zoom]="zoom" 
-		(mapClick)="addMarker($event)"
-		(mapMousemove)="move($event)" 
-		(mapRightclick)="removeLastMarker()"
-		(boundsChanged)="announceNewBounds()"
-		
-		>
-		
-		<map-marker 
-			#aMarker 
-			*ngFor="let marker of markers" 
-			[position]="marker.latLng"
-			[options]="marker.options" 
-			(mapClick)="openInfoWindow(aMarker)"
-			(mapClick)=centerOnMarker($event)>
-		</map-marker>
+		<div class="gmaps-container">
+			<google-map 
+			#map 
+			height="500px" 
+			width="900px" 
+			mapTypeId="terrain" 
+			[center]="center" 
+			[zoom]="zoom" 
+			(mapClick)="addMarker($event)"
+			(mapMousemove)="move($event)" 
+			(mapRightclick)="removeLastMarker()"
+			(boundsChanged)="announceNewBounds()"
+			
+			>
+			
+			<map-marker 
+				#aMarker 
+				*ngFor="let marker of markers" 
+				[position]="marker.latLng"
+				[options]="marker.options" 
+				(mapClick)="openInfoWindow(aMarker)"
+				(mapClick)=centerOnMarker($event)>
+			</map-marker>
 
-		<map-marker 
-			#currLocation
-			[position] = "currentLocationInfo"
-			[options]="markerOptions2" 
-			(mapClick)="openInfoWindow(currLocation)"
-			(mapClick)=centerOnMarker($event)>
-		</map-marker>
-		<map-info-window>Info Window</map-info-window>
-	</google-map>
-	<div>
-		<button (click)="filterMarkers()">Filter Locations</button>
-		<button (click)=centerOnSelf()> Center on Self</button>
-		<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
+			<map-marker 
+				#currLocation
+				[position] = "currentLocationInfo"
+				[options]="markerOptions2" 
+				(mapClick)="openInfoWindow(currLocation)"
+				(mapClick)=centerOnMarker($event)>
+			</map-marker>
+			<map-info-window>Info Window</map-info-window>
+			</google-map>
+		</div>	
 	
-		<div class="list" ng-repeat="marker in markers">
-			{{ markers | json }}
-		</div>
-	</div>
-	<div class="overflow-auto">
-		{{mapBounds}}
-	</div>
+</div>
 
-	</div>
+<div class="button-configs">
+	<button (click)="filterMarkers()">Filter Locations</button>
+	<button (click)=centerOnSelf()> Center on Self</button>
+	<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
+
+	<!-- <div class="list" ng-repeat="marker in markers">
+		{{ markers | json }}
+	</div> -->
+</div>
+
+<div class="overflow-auto">
+	<ul>
+		<li *ngFor="let mapBound of mapBounds">{{mapBound}}</li>
+	</ul>
 </div>
 
 
