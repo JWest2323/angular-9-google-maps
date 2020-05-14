@@ -54,6 +54,12 @@ export class AppComponent implements OnInit {
   // array for map bounds 
   mapBounds: google.maps.LatLngBounds[] = [];
   
+  // Callback booleans
+  mapLoaded: boolean;
+  markersLoaded: boolean;
+  mapDragged: boolean;
+  centerChanged: boolean;
+  zoomChange: boolean;
   
 
 
@@ -67,7 +73,7 @@ export class AppComponent implements OnInit {
         this.currentLocationInfo = latLng;
         this.center = latLng; 
         //this.markerPositions.push(this.myMarker.getPosition().toJSON());
-        this.centerOnSelf();
+        //this.centerOnSelf();
         // console.log(this.center);
         
       })
@@ -75,7 +81,7 @@ export class AppComponent implements OnInit {
   }
 
   centerOnSelf(){
-    this.center = this.myMarker.getPosition().toJSON();
+    this.center = this.currentLocationInfo;
   }
 
   centerOnMarker(event: google.maps.MouseEvent) {
@@ -88,6 +94,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     this.getCurrentLocation();
+    this.centerOnSelf();
   }
 
   addMarker(event: google.maps.MouseEvent) {
@@ -99,7 +106,33 @@ export class AppComponent implements OnInit {
 
   announceNewBounds() {
     this.mapBounds.push(this.map.getBounds());
+    this.mapBounds.reverse();
     //console.log("map bounds: " + this.map.getBounds());
+  }
+  tilesLoaded() {
+    this.mapLoaded = true;
+    console.log('tiles Loaded')
+    setTimeout(()=> {
+      this.mapLoaded = false;
+    }, 3000)
+  }
+  mapDragEvent() {
+    this.mapDragged = true;
+    this.centerChanged = true;
+    console.log('map dragged');
+    console.log('center changed');
+    setTimeout(()=> {
+      this.mapDragged = false;
+      this.centerChanged = false;
+    }, 3000);
+  }
+
+  zoomChanged() {
+    this.zoomChange = true;
+    console.log('zoom changed');
+    setTimeout(()=> {
+      this.zoomChange = false;
+    }, 3000);
   }
 
   move(event: google.maps.MouseEvent) {

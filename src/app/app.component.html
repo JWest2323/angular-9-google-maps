@@ -21,6 +21,9 @@
 			(mapMousemove)="move($event)" 
 			(mapRightclick)="removeLastMarker()"
 			(boundsChanged)="announceNewBounds()"
+			(tilesloaded)="tilesLoaded()"
+			(mapDrag)="mapDragEvent()"
+			(zoomChanged)="zoomChanged()"
 			
 			>
 			
@@ -45,21 +48,33 @@
 		</div>	
 	
 </div>
+<div class="button-container">
+	<div class="button-configs">
+		<button (click)="filterMarkers()">Filter Locations</button>
+		<button (click)=centerOnSelf()> Center on Self</button>
+		<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
 
-<div class="button-configs">
-	<button (click)="filterMarkers()">Filter Locations</button>
-	<button (click)=centerOnSelf()> Center on Self</button>
-	<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
-
-	<!-- <div class="list" ng-repeat="marker in markers">
-		{{ markers | json }}
-	</div> -->
+		<!-- <div class="list" ng-repeat="marker in markers">
+			{{ markers | json }}
+		</div> -->
+	</div>
 </div>
 
-<div class="overflow-auto">
-	<ul>
-		<li *ngFor="let mapBound of mapBounds">{{mapBound}}</li>
-	</ul>
+<div class="flex-container">
+	<div class="overflow-auto">
+		<h3>Map Bounds</h3>
+		<ul>
+			<li *ngFor="let mapBound of mapBounds">{{mapBound}}</li>
+		</ul>
+	</div>
+	<div>
+		<h3>Callbacks</h3> <br>
+		<span [ngClass]="{highlight: mapLoaded}">Map Loaded</span> <br>
+		<span [ngClass]="{highlight: markersLoaded}">Markers Loaded</span> <br>
+		<span [ngClass]="{highlight: mapDragged}">Map Dragged</span> <br>
+		<span [ngClass]="{highlight: centerChanged}">Center Changed</span> <br>
+		<span [ngClass]="{highlight: zoomChange}">Zoom Events</span> <br>
+	</div>
 </div>
 
 
