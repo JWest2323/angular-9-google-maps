@@ -24,12 +24,10 @@
 			(tilesloaded)="tilesLoaded()"
 			(mapDrag)="mapDragEvent()"
 			(zoomChanged)="zoomChanged()"
-			
 			>
-			
+			<ng-container *ngFor="let marker of displayMarkers">
 			<map-marker 
 				#aMarker 
-				*ngFor="let marker of markers" 
 				[position]="marker.latLng"
 				[options]="marker.options" 
 				(mapClick)="openInfoWindow(aMarker)"
@@ -43,7 +41,8 @@
 				(mapClick)="openInfoWindow(currLocation)"
 				(mapClick)=centerOnMarker($event)>
 			</map-marker>
-			<map-info-window>Info Window</map-info-window>
+			<map-info-window>{{marker.infoWindow}}</map-info-window>
+		</ng-container>
 			</google-map>
 		</div>	
 	
@@ -52,7 +51,7 @@
 		<mat-form-field>
 				<mat-label>Select a Filter</mat-label>
 				<mat-select [(value)]="selectedFilter">
-				  <mat-option>None</mat-option>
+				  <mat-option value="none" (click)=filterMarkers(selectedFilter)>None</mat-option>
 				  <mat-option value="atm" (click)=filterMarkers(selectedFilter)>ATM</mat-option>
 				  <mat-option value="branch" (click)=filterMarkers(selectedFilter)>Branch</mat-option>
 				</mat-select>

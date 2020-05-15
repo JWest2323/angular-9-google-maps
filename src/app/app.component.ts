@@ -102,6 +102,8 @@ export class AppComponent implements OnInit {
       this.displayMarkers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
     } else if (type === "branch") {
       this.displayMarkers = this.markers.filter((marker: citiMarker) => marker.type === 'branch')
+    } else {
+      this.displayMarkers = this.markers;
     }
     
   }
