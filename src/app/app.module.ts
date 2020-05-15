@@ -8,10 +8,11 @@ import {GoogleMapsModule} from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar'
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, GoogleMapsModule, BrowserAnimationsModule, MatSidenavModule, MatToolbarModule ],
+  imports:      [ BrowserModule, FormsModule, GoogleMapsModule, BrowserAnimationsModule, MatSidenavModule, MatToolbarModule, MatSelectModule ],
   declarations: [ AppComponent, HelloComponent ],
   bootstrap:    [ AppComponent ]
 })

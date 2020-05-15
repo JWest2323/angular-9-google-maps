@@ -8,7 +8,8 @@ interface citiMarker {
     options: {
       draggable: boolean
       icon: string
-    }
+    },
+    infoWindow: string
 }
 @Component({
   selector: "my-app",
@@ -32,17 +33,17 @@ export class AppComponent implements OnInit {
   markerOptions2 = { draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/circled-dot.png' };
   markers: citiMarker[] = [
     {latLng: {lat: 26.073581419812424, lng: -80.33291691002196},
-    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
-    type: "atm"},
+    options: {draggable: false, icon: "https://img.icons8.com/offices/40/000000/atm.png"},
+    type: "atm", infoWindow: 'Citi ATM'},
     {latLng: {lat: 26.034101756132287, lng: -80.19970768150634},
-    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
-    type: "branch"},
+    options: {draggable: false, icon: "https://img.icons8.com/doodle/48/000000/bank.png"},
+    type: "branch", infoWindow: 'Citi Branch'},
     {latLng: {lat: 26.16729226373687, lng: -80.11181705650634},
-    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
-    type: "atm"},
+    options: {draggable: false, icon: "https://img.icons8.com/offices/40/000000/atm.png"},
+    type: "atm", infoWindow: 'Citi Atm'},
     {latLng: {lat: 26.274474133866548, lng: -80.23815982994384},
-    options: {draggable: false, icon: "https://img.icons8.com/ultraviolet/40/000000/bank.png"},
-    type: "branch"}
+    options: {draggable: false, icon: "https://img.icons8.com/doodle/48/000000/bank.png"},
+    type: "branch", infoWindow: 'Citi Branchh'}
   ];
   zoom = 10;
   display?: google.maps.LatLngLiteral;
@@ -50,6 +51,8 @@ export class AppComponent implements OnInit {
   
   myMarker = new google.maps.Marker();
   icons: any;
+
+  selectedFilter: any;
 
   // array for map bounds 
   mapBounds: google.maps.LatLngBounds[] = [];
@@ -69,9 +72,10 @@ export class AppComponent implements OnInit {
         const longitude = position.coords.longitude;
         const latitude = position.coords.latitude;
         const latLng = {lat: latitude, lng: longitude};
-
+        
         this.currentLocationInfo = latLng;
-        this.center = latLng; 
+        this.centerOnSelf();
+        
         //this.markerPositions.push(this.myMarker.getPosition().toJSON());
         //this.centerOnSelf();
         // console.log(this.center);
@@ -82,14 +86,21 @@ export class AppComponent implements OnInit {
 
   centerOnSelf(){
     this.center = this.currentLocationInfo;
+    console.log(this.currentLocationInfo);
+    
   }
 
   centerOnMarker(event: google.maps.MouseEvent) {
     const latLng = event.latLng.toJSON();
     this.center = latLng;
   }
-  filterMarkers() {
-    this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
+  filterMarkers(type: string) {
+    if(type === "atm"){
+      this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
+    } else if (type === "branch") {
+      this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'branch')
+    }
+    
   }
 
   ngOnInit(){
@@ -98,7 +109,7 @@ export class AppComponent implements OnInit {
   }
 
   addMarker(event: google.maps.MouseEvent) {
-    const newMarker: citiMarker = {latLng: event.latLng.toJSON(), type: "atm", options: {draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png'}};
+    const newMarker: citiMarker = {latLng: event.latLng.toJSON(), type: "atm", options: {draggable: false, icon: 'https://img.icons8.com/ultraviolet/40/000000/bank.png'}, infoWindow: ''};
     this.markers.push(newMarker);
     console.log(this.markers);
     

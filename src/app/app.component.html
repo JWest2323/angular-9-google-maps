@@ -49,14 +49,19 @@
 	
 </div>
 <div class="button-container">
+		<mat-form-field>
+				<mat-label>Select a Filter</mat-label>
+				<mat-select [(value)]="selectedFilter">
+				  <mat-option>None</mat-option>
+				  <mat-option value="atm" (click)=filterMarkers(selectedFilter)>ATM</mat-option>
+				  <mat-option value="branch" (click)=filterMarkers(selectedFilter)>Branch</mat-option>
+				</mat-select>
+		</mat-form-field>
+			  
+			  <p>You selected: {{selectedFilter}}</p>
 	<div class="button-configs">
-		<button (click)="filterMarkers()">Filter Locations</button>
+		<!-- <button (click)="filterMarkers()">Filter Locations</button> -->
 		<button (click)=centerOnSelf()> Center on Self</button>
-		<button (click)="displaySidenav=!displaySidenav">Toggle Sidenav</button>
-
-		<!-- <div class="list" ng-repeat="marker in markers">
-			{{ markers | json }}
-		</div> -->
 	</div>
 </div>
 
