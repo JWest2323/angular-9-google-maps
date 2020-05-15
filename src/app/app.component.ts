@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   
   myMarker = new google.maps.Marker();
   icons: any;
+  displayMarkers: citiMarker[] = [];
 
   selectedFilter: any;
 
@@ -64,7 +65,9 @@ export class AppComponent implements OnInit {
   centerChanged: boolean;
   zoomChange: boolean;
   
-
+  constructor() {
+    this.displayMarkers = this.markers;
+  }
 
   getCurrentLocation(){
     if(navigator.geolocation) {
@@ -96,9 +99,9 @@ export class AppComponent implements OnInit {
   }
   filterMarkers(type: string) {
     if(type === "atm"){
-      this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
+      this.displayMarkers = this.markers.filter((marker: citiMarker) => marker.type === 'atm')
     } else if (type === "branch") {
-      this.markers = this.markers.filter((marker: citiMarker) => marker.type === 'branch')
+      this.displayMarkers = this.markers.filter((marker: citiMarker) => marker.type === 'branch')
     }
     
   }
