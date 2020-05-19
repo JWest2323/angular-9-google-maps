@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from "@angular/core";
 import { MapInfoWindow, MapMarker, GoogleMap } from "@angular/google-maps";
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+
 
 interface citiMarker {
     latLng: google.maps.LatLngLiteral
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   markers: citiMarker[] = [
     {latLng: {lat: 26.073581419812424, lng: -80.33291691002196},
     options: {draggable: false, icon: "https://img.icons8.com/offices/40/000000/atm.png"},
-    type: "atm", infoWindow: 'Citi ATM'},
+    type: "atm", infoWindow: 'Citi Atm'},
     {latLng: {lat: 26.034101756132287, lng: -80.19970768150634},
     options: {draggable: false, icon: "https://img.icons8.com/doodle/48/000000/bank.png"},
     type: "branch", infoWindow: 'Citi Branch'},
@@ -78,17 +78,13 @@ export class AppComponent implements OnInit {
         
         this.currentLocationInfo = latLng;
         this.centerOnSelf();
-        
-        //this.markerPositions.push(this.myMarker.getPosition().toJSON());
-        //this.centerOnSelf();
-        // console.log(this.center);
-        
       })
     }
   }
 
   centerOnSelf(){
     this.center = this.currentLocationInfo;
+    this.map.panTo(this.center);
     console.log(this.currentLocationInfo);
     
   }
@@ -110,7 +106,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     this.getCurrentLocation();
-    this.centerOnSelf();
+    //this.centerOnSelf();
   }
 
   addMarker(event: google.maps.MouseEvent) {
@@ -135,8 +131,8 @@ export class AppComponent implements OnInit {
   mapDragEvent() {
     this.mapDragged = true;
     this.centerChanged = true;
-    console.log('map dragged');
-    console.log('center changed');
+    // console.log('map dragged');
+    // console.log('center changed');
     setTimeout(()=> {
       this.mapDragged = false;
       this.centerChanged = false;
