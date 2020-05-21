@@ -106,7 +106,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     this.getCurrentLocation();
-    //this.centerOnSelf();
+    debugger
+    this.initCustomControl(this.map);
   }
 
   addMarker(event: google.maps.MouseEvent) {
@@ -159,7 +160,7 @@ export class AppComponent implements OnInit {
     this.markers.pop();
   }
 
-  CenterControl(controlDiv, map: google.maps.Map) {
+  CenterControl(controlDiv): HTMLDivElement {
     var currLocation: any;
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
@@ -186,26 +187,25 @@ export class AppComponent implements OnInit {
 
     // Setup the click event listeners: simply set the map to Chicago.
     controlUI.addEventListener('click', () => {
-      this.map.setCenter(currLocation);
+      this.map.panTo(currLocation);
     });
-
+    return controlUI
   }
 
-  // init map and place the custom control ui
-   initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: this.currentLocationInfo
-    });
+  // init the custom control ui using a passed in map
+   initCustomControl(map: google.maps.Map) {
+    // var map = new google.maps.Map(document.getElementById('map'), {
+    //   zoom: 12,
+    //   center: this.currentLocationInfo
+    // });
 
     // Create the DIV to hold the control and call the CenterControl()
     // constructor passing in this DIV.
     var centerControlDiv = document.createElement('div');
-    var centerControl = new this.CenterControl(centerControlDiv, map);
+    var centerControl = this.CenterControl(centerControlDiv);
 
-    //centerControlDiv.index = 1;
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControl);
-    
+    centerControlDiv.tabIndex = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControl);
     this.icons = {
       // branch icon
       branch: {
@@ -246,10 +246,5 @@ export class AppComponent implements OnInit {
 
     }
 
-
-
-    
-    
-    return map;
   }
 }
